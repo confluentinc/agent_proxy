@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: "MCPProxyClient"
+  main:
+    banner-mode: off
+    web-application-type: none
+kafka:
+  client-id: ${CLIENT_ID:#{null}}
+  application-id: "${APPLICATION_ID}"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}
+  registration-topic-name: ${REGISTRY_TOPIC:#{null}}
+logging:
+  file:
+    name: ${LOG_FILE}
+  pattern:
+    console: ""
+management:
+  server:
+    port: 8081
+  appoptics:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

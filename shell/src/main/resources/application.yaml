@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: "Confluent MCP Proxy Client"
+  shell:
+    interactive:
+      enabled: true
+  main:
+    web-application-type: none

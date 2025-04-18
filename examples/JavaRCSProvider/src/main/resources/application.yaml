@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: "default"
+  application:
+    name: "JavaRCSProvider"
+  main:
+    web-application-type: none
+kafka:
+  client-id: "java-rcs-provider"
+  application-id: "rcs_provider"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}

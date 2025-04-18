@@ -1,0 +1,114 @@
+spring:
+  config:
+    activate:
+      on-profile: "production"
+  application:
+    name: "Confluent MCP Proxy"
+  mvc:
+    async:
+      request-timeout: 60000
+  main:
+    web-application-type: reactive
+mcp:
+  server:
+    name: "Confluent MCP Proxy"
+    version: 1.0.0
+    mode: "sse"
+kafka:
+  client-id: ${CLIENT_ID:#{null}}
+  application-id: "mcp.proxy"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}
+  registration-topic-name: ${REGISTRY_TOPIC:#{null}}
+  response-timeout: ${RESPONSE_TIMEOUT:20000}
+authentication:
+  enabled: true
+  basic:
+    cache-size: 100
+    cache-expiry-in-second: 3600
+  jwt:
+    issuer-uri: ${JWT_ISSUER:#{null}}
+    audience: ${JWT_AUDIENCE:#{null}}
+management:
+  server:
+    port: 8081
+  appoptics:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+---
+spring:
+  config:
+    activate:
+      on-profile: "default"
+  application:
+    name: "Confluent MCP Proxy"
+  mvc:
+    async:
+      request-timeout: 60000
+  main:
+    web-application-type: reactive
+mcp:
+  server:
+    name: "Confluent MCP Proxy"
+    version: 1.0.0
+    mode: "sse"
+kafka:
+  client-id: ${CLIENT_ID:#{null}}
+  application-id: "mcp.proxy"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}
+  registration-topic-name: ${REGISTRY_TOPIC:#{null}}
+  response-timeout: ${RESPONSE_TIMEOUT:20000}
+authentication:
+  enabled: false
+management:
+  server:
+    port: 8081
+  appoptics:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  config:
+    activate:
+      on-profile: "stdio"
+  application:
+    name: "Confluent MCP Proxy"
+  main:
+    banner-mode: off
+    web-application-type: none
+mcp:
+  server:
+    name: "Confluent MCP Proxy"
+    version: 1.0.0
+    mode: "stdio"
+kafka:
+  client-id: ${CLIENT_ID:#{null}}
+  application-id: "mcp.proxy"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}
+  registration-topic-name: ${REGISTRY_TOPIC:#{null}}
+  response-timeout: ${RESPONSE_TIMEOUT:20000}
+logging:
+  file:
+    name: ${LOG_FILE}
+  pattern:
+    console: ""
+authentication:
+  enabled: false

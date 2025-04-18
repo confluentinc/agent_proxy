@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: "Confluent MCP Proxy"
+  mvc:
+    async:
+      request-timeout: 60000
+  main:
+    web-application-type: reactive
+mcp:
+  server:
+    name: "Confluent MCP Proxy"
+    version: 1.0.0
+    mode: "sse"
+authentication:
+  cache-size: 100
+  cache-expiry-in-second: 300
+  enabled: false
+kafka:
+  application-id: "mcp.proxy"
+  broker-servers: ${BROKER_URL}
+  jaas-config: ""
+  sr-url: "mock://localhost"
+  sr-basic-auth: ""

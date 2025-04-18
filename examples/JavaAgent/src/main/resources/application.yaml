@@ -1,0 +1,18 @@
+spring:
+  config:
+    activate:
+      on-profile: "default"
+  application:
+    name: "JavaAgent"
+  main:
+    web-application-type: none
+kafka:
+  client-id: "java-agent"
+  application-id: "tool_agent"
+  broker-servers: ${BROKER_URL}
+  jaas-config: org.apache.kafka.common.security.plain.PlainLoginModule required username="${JAAS_USERNAME}" password="${JAAS_PASSWORD}";
+  sr-url: ${SR_URL}
+  sr-basic-auth: ${SR_API_KEY}:${SR_API_SECRET}
+model:
+  system-prompt: "You are specialized in sentiment analysis. Your job is to analyze the sentiment of the text and provide the sentiment score. The sentiment score is positive, negative, or neutral."
+  gemini-key: ${GEMINI_API_KEY}

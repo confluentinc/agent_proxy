@@ -1,0 +1,5 @@
+io.confluent.pas.agent.proxy.frameworks.java.spring.autoconfig.McpProxyAutoConfiguration
+io.confluent.pas.agent.proxy.frameworks.java.spring.autoconfig.McpRegistrationAutoConfiguration
+io.confluent.pas.agent.proxy.frameworks.java.spring.autoconfig.McpServerAutoConfiguration
+io.confluent.pas.agent.proxy.frameworks.java.spring.autoconfig.McpClientAutoConfiguration
+io.confluent.pas.agent.proxy.frameworks.java.spring.annotation.AgentRegistrar

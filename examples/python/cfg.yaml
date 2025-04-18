@@ -1,0 +1,36 @@
+command: "uv"
+arguments:
+  - "run"
+  - "--with"
+  - "mcp[cli]"
+  - "mcp"
+  - "run"
+  - "/Users/pascal/projects/oss/mcp-openapi-proxy/examples/python/server.py"
+tools:
+  - name: "add"
+    #  request_topic: "a_request_topic"
+    #  response_topic: "a_response_topic"
+    output_schema: "
+      {
+         \"properties\":{
+            \"result\":{
+               \"connect.index\":0,
+               \"type\":\"number\"
+            }
+         },
+         \"required\":[
+            \"result\"
+         ],
+         \"title\":\"Record\",
+         \"type\":\"object\"
+      }
+      "
+  - name: "sub"
+    #  request_topic: "a_request_topic"
+    #  response_topic: "a_response_topic"
+    output_schema: "
+        {
+          \"$schema\": \"http://json-schema.org/draft-04/schema#\",
+          \"type\": \"integer\"
+        }
+        "
