@@ -1,16 +1,15 @@
-# Agent Proxy for Confluent Cloud
+# Agent Proxy for Event-Driven Agentic Choreography
 
 ## Overview
 
 This open-source project provides an **Agent proxy** that enables **event-driven agentic choreography**
-architecture. The
-project consists of two main modules:
+architecture. The project consists of two main modules:
 
 1. **[Proxy Module](proxy/README.md)** – Implements an MCP-compliant and OpenAPI-compliant service that exposes
    Confluent Cloud topics.
 2. **[Shell Module](shell/README.md)** – Enables interaction with MCP services and Large Language Models (LLMs) such
    as OpenAI, Gemini, and AWS Bedrock.
-3. **Agentic Choreography Framework** – A Java framework designed to accelerate the development of agents by taking care
+3. **[Agentic Choreography Framework](frameworks/agent-proxy-framework/README.md)** – A Java framework designed to accelerate the development of agents by taking care
    of infrastructure tasks like topic creation, schema registration, agent registration, and request/response handling.
    For more details, see the [Agentic Choreography Framework](frameworks/java/README.md).
 
@@ -26,7 +25,7 @@ project consists of two main modules:
 ## Key Features
 
 - **MCP Protocol Support**: Allows **LLM tool discovery** and tool execution via **stdio or HTTP SSE**.
-- **Confluent Cloud Integration**: Provides seamless **real-time data access** via Confluent Cloud topics.
+- **Confluent/Kafka Integration**: Provides seamless **real-time data access** via topics.
 - **OpenAPI Compliance**: Standardized API definitions for easy integration.
 - **Multi-LLM Support**: CLI module interacts with **OpenAI, Gemini, and AWS Bedrock**.
 
@@ -43,9 +42,8 @@ project consists of two main modules:
     - Requests can be sent over **stdio or HTTP SSE**, enabling synchronous and asynchronous interactions.
 
 3. **Event-Driven Execution**:
-    - The **Agent Proxy** communicates with **Confluent Cloud**, leveraging **Kafka topics as an API layer** to
-      facilitate **real-time data flow**.
-    - Agents can **subscribe to relevant topics**, process data, and publish results back into Confluent Cloud, ensuring
+    - The **Agent Proxy** uses **Kafka topics as an API layer** to enable **real-time data flow**.
+    - Agents can **subscribe to relevant topics**, process data, and publish results back into topics, ensuring
       a fully **event-driven architecture**
 
 ### **Diagram**
@@ -55,24 +53,23 @@ project consists of two main modules:
    +----------------------+          +---------------------------+
    |       Agent 1        | <------> |        Agent Proxy        |
    +----------------------+          +---------------------------+
-                                              |        |
-                                              v        v
+                                              |        ^
+                                              v        |
    +----------------------+          +---------------------------+
-   |       Agent 2        | <------> |       Confluent Cloud     |
+   |       Agent 2        | <------> |          Topics           |
    +----------------------+          +---------------------------+
-
 ```
 
 ### **Key Benefits**
 
 - **Dynamic Agent Discovery**: Agents register their capabilities with the proxy, allowing them to be easily called when
   needed.
-- **Real-Time Event Processing**: Confluent Cloud enables scalable and reliable event-driven communication.
-- **Multi-Agent Collaboration**: Multiple agents can work together, exchanging data and insights through the **MCP Proxy
+- **Real-Time Event Processing**: Topics enables scalable and reliable event-driven communication.
+- **Multi-Agent Collaboration**: Multiple agents can work together, exchanging data and insights through the **Agent Proxy
   **.
 
 This architecture provides a **flexible and scalable** foundation for **agentic workflows** by combining **MCP, OpenAPI,
-and Confluent Cloud**.
+and Topics**.
 
 ## Getting Started
 
