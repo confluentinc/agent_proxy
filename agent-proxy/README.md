@@ -1,10 +1,10 @@
-# Proxy
+# Agent Proxy
 
 [Back to Main README](../README.md)
 
 ## Table of Contents
 
-- [Proxy](#proxy)
+- [Agent Proxy](#agent-proxy)
     - [Overview](#overview)
         - [Key Features](#key-features)
     - [Event-Driven Agent Choreography](#event-driven-agent-choreography)
@@ -45,7 +45,7 @@
 
 ## Overview
 
-The **Proxy** service is designed to bridge Confluent Cloud topics with structured APIs by implementing the **MCP
+The **Agent Proxy** service is designed to bridge Kafka topics with structured APIs by implementing the **MCP
 protocol** and **OpenAPI**. It allows seamless and secure communication between tools, resources, and services through a
 well-defined interface.
 
@@ -61,7 +61,7 @@ well-defined interface.
 
 ## Event-Driven Agent Choreography
 
-The **Proxy** service enables **event-driven agent choreography** by coordinating multiple autonomous agents through
+The **Agent Proxy** service enables **event-driven agent choreography** by coordinating multiple autonomous agents through
 event streams in Kafka. Unlike traditional orchestration with a central controller, this model allows agents to make
 independent decisions based on the events they receive.
 
@@ -80,7 +80,7 @@ independent decisions based on the events they receive.
 
 ## Communication Models
 
-The Proxy service implements two distinct communication patterns for interacting with tools and resources, both
+The **Agent Proxy** service implements two distinct communication patterns for interacting with tools and resources, both
 leveraging Kafka as the underlying message transport system.
 
 ### Tool Communication Model

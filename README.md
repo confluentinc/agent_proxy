@@ -5,7 +5,7 @@
 This open-source project provides an **Agent proxy** that enables **event-driven agentic choreography**
 architecture. The project consists of two main modules:
 
-1. **[Proxy Module](proxy/README.md)** – Implements an MCP-compliant and OpenAPI-compliant service that exposes
+1. **[Proxy Module](agent-proxy/README.md)** – Implements an MCP-compliant and OpenAPI-compliant service that exposes
    Confluent Cloud topics.
 2. **[Shell Module](shell/README.md)** – Enables interaction with MCP services and Large Language Models (LLMs) such
    as OpenAI, Gemini, and AWS Bedrock.
