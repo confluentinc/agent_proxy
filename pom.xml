@@ -35,7 +35,7 @@
     <properties>
         <java.version>21</java.version>
         <confluent.version>7.9.1-180</confluent.version>
-        <kafka.version>7.9.0-ce</kafka.version>
+        <kafka.version>7.9.1-ce</kafka.version>
         <kcache.version>5.2.1</kcache.version>
         <langchain4j.version>1.0.0-beta4</langchain4j.version>
         <reactor.version>2024.0.4</reactor.version>
