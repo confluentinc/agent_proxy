@@ -37,15 +37,15 @@
         <confluent.version>7.9.1-180</confluent.version>
         <kafka.version>7.9.1-ce</kafka.version>
         <kcache.version>5.2.1</kcache.version>
-        <langchain4j.version>1.0.0-beta4</langchain4j.version>
+        <langchain4j.version>1.0.0</langchain4j.version>
         <reactor.version>2024.0.4</reactor.version>
         <lombok.version>1.18.38</lombok.version>
-        <reactor.version>2024.0.5</reactor.version>
+        <reactor.version>2024.0.6</reactor.version>
         <junit.jupiter.version>5.12.2</junit.jupiter.version>
         <mockito.version>5.17.0</mockito.version>
         <aspectj.version>3.27.3</aspectj.version>
         <aspectjweaver.version>1.9.24</aspectjweaver.version>
-        <reactor-test.version>3.7.5</reactor-test.version>
+        <reactor-test.version>3.7.6</reactor-test.version>
         <testcontainers.version>1.21.0</testcontainers.version>
         <mcp.version>0.10.0</mcp.version>
     </properties>
