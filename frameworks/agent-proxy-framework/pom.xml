@@ -16,7 +16,7 @@
     <properties>
         <jsonschema-generator.version>4.38.0</jsonschema-generator.version>
         <spring-ai.version>1.0.0-M8</spring-ai.version>
-        <kstream.version>7.9.1-ce</kstream.version>
+        <kstream.version>8.0.0-ce</kstream.version>
     </properties>
 
     <dependencyManagement>
