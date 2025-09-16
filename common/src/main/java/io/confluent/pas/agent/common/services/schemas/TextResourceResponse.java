@@ -1,73 +1,30 @@
 package io.confluent.pas.agent.common.services.schemas;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.confluent.kafka.schemaregistry.annotations.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Schema(value = """
-            {
-               "properties":{
-                  "type":{
-                     "connect.index":0,
-                     "enum":[
-                        "text",
-                        "blob"
-                     ],
-                     "default": "text",
-                     "type":"string"
-                  },
-                  "uri":{
-                     "connect.index":1,
-                     "type":"string"
-                  },
-                  "mimeType":{
-                     "connect.index":2,
-                     "type":"string"
-                  },
-                  "text":{
-                     "connect.index":3,
-                     "oneOf":[
-                        {
-                           "type":"null"
-                        },
-                        {
-                           "type":"string"
-                        }
-                     ]
-                  },
-                  "blob":{
-                     "connect.index":4,
-                     "oneOf":[
-                        {
-                           "type":"null"
-                        },
-                        {
-                           "type":"string"
-                        }
-                     ]
-                  }
-               },
-               "required":[
-                  "type",
-                  "uri",
-                  "mimeType"
-               ],
-               "title":"Record",
-               "type":"object"
-            }""", refs = {})
+import java.util.HashMap;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TextResourceResponse extends ResourceResponse {
-    @JsonProperty(value = "text", required = true)
-    private String text;
+    private final static String TEXT = "text";
+
+    public String getText() {
+        return getMetaDataValue(TEXT, String.class);
+    }
+
+    public void setText(String text) {
+        setMetaDataValue(TEXT, text);
+    }
 
     public TextResourceResponse(String uri, String mimeType, String text) {
-        super(ResponseType.TEXT, uri, mimeType);
-        this.text = text;
+        super(ResourceResponse.TEXT_TYPE, uri, mimeType, new HashMap<>());
+
+        setText(text);
     }
 }

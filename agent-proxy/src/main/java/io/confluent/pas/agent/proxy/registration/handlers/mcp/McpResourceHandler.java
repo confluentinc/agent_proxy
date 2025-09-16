@@ -17,6 +17,7 @@ import reactor.core.publisher.Mono;
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Handler for Model Context Protocol (MCP) resource registration and request
@@ -45,8 +46,7 @@ public class McpResourceHandler extends AbstractRegistrationHandler<ResourceRegi
                               RequestResponseHandler requestResponseHandler,
                               McpAsyncServer mcpServer) {
         super(registration, schemas, mcpServer, requestResponseHandler, (payload) -> {
-            final ResourceResponse.ResponseType responseType = ResourceResponse.ResponseType.fromValue(
-                    payload.get("type").asText());
+            final String responseType = payload.get("type").asText();
 
             final McpSchema.ResourceContents content = createResourceContents(
                     JsonUtils.toMap(payload),
@@ -127,9 +127,9 @@ public class McpResourceHandler extends AbstractRegistrationHandler<ResourceRegi
      */
     private static McpSchema.ResourceContents createResourceContents(
             Map<String, Object> response,
-            ResourceResponse.ResponseType responseType) {
+            String responseType) {
 
-        if (responseType == ResourceResponse.ResponseType.BLOB) {
+        if (Objects.equals(responseType, ResourceResponse.BLOB_TYPE)) {
             return createBlobContents(response);
         } else {
             return createTextContents(response);

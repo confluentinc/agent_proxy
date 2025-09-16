@@ -7,103 +7,80 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Schema(value = """
-            {
-               "properties":{
-                  "type":{
-                     "connect.index":0,
-                     "enum":[
-                        "text",
-                        "blob"
-                     ],
-                     "default": "text",
-                     "type":"string"
-                  },
-                  "uri":{
-                     "connect.index":1,
-                     "type":"string"
-                  },
-                  "mimeType":{
-                     "connect.index":2,
-                     "type":"string"
-                  },
-                  "text":{
-                     "connect.index":3,
-                     "oneOf":[
-                        {
-                           "type":"null"
-                        },
-                        {
-                           "type":"string"
-                        }
-                     ]
-                  },
-                  "blob":{
-                     "connect.index":4,
-                     "oneOf":[
-                        {
-                           "type":"null"
-                        },
-                        {
-                           "type":"string"
-                        }
-                     ]
-                  }
-               },
-               "required":[
-                  "type",
-                  "uri",
-                  "mimeType"
-               ],
-               "title":"Record",
-               "type":"object"
-            }""", refs = {})
+        {
+           "properties":{
+              "type":{
+                 "connect.index":0,
+                 "enum":[
+                    "text",
+                    "blob"
+                 ],
+                 "default": "text",
+                 "type":"string"
+              },
+              "uri":{
+                 "connect.index":1,
+                 "type":"string"
+              },
+              "mimeType":{
+                 "connect.index":2,
+                 "type":"string"
+              },
+              "metaData":{
+                 "connect.index":3,
+                 "type":"object",
+                 "additionalProperties":true
+              }
+           },
+           "required":[
+              "type",
+              "uri",
+              "mimeType"
+           ],
+           "title":"Record",
+           "type":"object"
+        }""", refs = {})
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = TextResourceResponse.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TextResourceResponse.class, name = "text"),
-        @JsonSubTypes.Type(value = BlobResourceResponse.class, name = "blob")})
-public class ResourceResponse {
-    public enum ResponseType {
-        TEXT("text"),
-        BLOB("blob");
-
-        private final String value;
-
-        ResponseType(String value) {
-            this.value = value;
-        }
-
-        @JsonValue
-        public String getValue() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            return value;
-        }
-
-        @JsonCreator
-        public static ResourceResponse.ResponseType fromValue(String value) {
-            for (ResourceResponse.ResponseType e : ResourceResponse.ResponseType.values()) {
-                if (e.value.equals(value)) {
-                    return e;
-                }
-            }
-
-            throw new IllegalArgumentException("Unexpected value '" + value + "'");
-        }
-    }
+        @JsonSubTypes.Type(value = TextResourceResponse.class, name = ResourceResponse.TEXT_TYPE),
+        @JsonSubTypes.Type(value = BlobResourceResponse.class, name = ResourceResponse.BLOB_TYPE)})
+public class ResourceResponse extends AbstractSchema {
+    public static final String TEXT_TYPE = "text";
+    public static final String BLOB_TYPE = "blob";
 
     @JsonProperty(value = "type", required = true)
-    private ResponseType type;
+    private String type;
     @JsonProperty(value = "uri", required = true)
     private String uri;
     @JsonProperty(value = "mimeType", required = true)
     private String mimeType;
+
+    protected ResourceResponse(String type,
+                               String uri,
+                               String mimeType,
+                               Map<String, Object> metaData) {
+        super(metaData);
+
+        this.type = type;
+        this.uri = uri;
+        this.mimeType = mimeType;
+    }
+
+    protected ResourceResponse(String type,
+                               String uri,
+                               String mimeType) {
+        super(new HashMap<>());
+
+        this.type = type;
+        this.uri = uri;
+        this.mimeType = mimeType;
+    }
 }

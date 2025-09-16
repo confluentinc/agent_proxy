@@ -16,37 +16,47 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The RegistrationCoordinator is the central component responsible for managing
- * tool registrations.
+ * tool registrations in a thread-safe and concurrent manner.
  * <p>
  * It coordinates the following processes:
  * - Listening for new registrations on the registration topic
- * - Processing incoming registrations and un-registrations
+ * - Processing incoming registrations and un-registrations concurrently
  * - Creating and managing handlers for each registered tool
- * - Maintaining the lifecycle of registrations
+ * - Maintaining the lifecycle of registrations with proper synchronization
  * - Broadcasting registration events to other components
+ * - Handling registration conflicts and updates atomically
  * <p>
  * This class acts as the bridge between the Kafka-based registration system and
- * the protocol-specific servers (MCP, REST) that handle client communications.
+ * the protocol-specific servers (MCP, REST, A2A) that handle client communications.
+ * It ensures thread-safe operations when managing multiple concurrent registrations
+ * and unregistrations.
  */
 @Slf4j
 @Component
 public class RegistrationCoordinator implements DisposableBean {
 
     /**
-     * MCP server for handling Model Context Protocol communications
+     * MCP server for handling Model Context Protocol communications asynchronously
      */
     @Getter
     private final McpAsyncServer mcpServer;
 
+    /**
+     * Agent-to-Agent async server for handling inter-agent communications
+     */
     @Getter
     private final A2AAsyncServer a2AAsyncServer;
 
+    /**
+     * REST server for handling synchronous HTTP communications with agents
+     */
     @Getter
     private final AgentAsyncServer restServer;
 
@@ -57,7 +67,9 @@ public class RegistrationCoordinator implements DisposableBean {
     private final RequestResponseHandler requestResponseHandler;
 
     /**
-     * Thread-safe map of registration handlers indexed by registration name
+     * Thread-safe map of registration handlers indexed by registration name.
+     * Uses ConcurrentHashMap to ensure atomic operations and visibility across threads
+     * when adding, removing, or accessing handlers.
      */
     private final Map<String, CompositeHandler> handlers = new ConcurrentHashMap<>();
 
@@ -234,14 +246,16 @@ public class RegistrationCoordinator implements DisposableBean {
         // Handle registration update or creation
         if (handlers.containsKey(registrationName)) {
             log.info("Registration already exists, updating: {}", registrationName);
-            // First unregister the existing handler to clean up resources
+            // First, unregister the existing handler to clean up resources
             unregisterHandler(registrationName);
         } else {
             log.info("Received new registration: {}", registrationName);
         }
 
         // Create a new handler for the registration
-        createHandler(registration, registrationName);
+        createHandler(registration, registrationName)
+                .doOnError(e -> log.error("Error creating handler for registration: {}", registrationName, e))
+                .block();
     }
 
     /**
@@ -253,7 +267,7 @@ public class RegistrationCoordinator implements DisposableBean {
      * @param registration     The registration details
      * @param registrationName The name of the registration
      */
-    private void createHandler(Registration registration, String registrationName) {
+    private Mono<Void> createHandler(Registration registration, String registrationName) {
         try {
             // Create a new composite handler for the registration
             final CompositeHandler handler = new CompositeHandler(
@@ -263,13 +277,11 @@ public class RegistrationCoordinator implements DisposableBean {
                     this);
 
             // Initialize the handler asynchronously and block until complete
-            handler.initialize()
+            return handler.initialize()
                     .doOnSuccess(v -> handleSuccessfulRegistration(registrationName, handler, registration))
-                    .doOnError(e -> handleFailedRegistration(registrationName, e))
-                    .block();
+                    .doOnError(e -> handleFailedRegistration(registrationName, e));
         } catch (Exception e) {
-            // Handle any exceptions that occur during handler creation
-            log.error("Error creating handler for registration: {}", registrationName, e);
+            return Mono.error(e);
         }
     }
 

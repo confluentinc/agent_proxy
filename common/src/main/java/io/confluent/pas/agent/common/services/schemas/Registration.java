@@ -5,23 +5,15 @@ import io.confluent.kafka.schemaregistry.annotations.Schema;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Schema(value = """
         {
            "properties":{
               "registrationType":{
                  "connect.index":5,
                  "type":"string"
-              },
-              "correlationIdFieldName":{
-                 "connect.index":4,
-                 "oneOf":[
-                    {
-                       "type":"null"
-                    },
-                    {
-                       "type":"string"
-                    }
-                 ]
               },
               "description":{
                  "connect.index":1,
@@ -33,13 +25,18 @@ import org.apache.commons.lang3.StringUtils;
               },
               "requestTopicName":{
                  "connect.index":2,
-                  "type":"string"
+                 "type":"string"
               },
               "responseTopicName":{
                  "connect.index":3,
                  "type":"string"
               },
-              "mimeType":{
+              "metaData":{
+                 "connect.index":4,
+                 "type":"object",
+                 "additionalProperties":true
+              },
+              "version":{
                  "connect.index":6,
                  "oneOf":[
                     {
@@ -48,31 +45,9 @@ import org.apache.commons.lang3.StringUtils;
                     {
                        "type":"string"
                     }
-                 ]
-              },
-              "url":{
-                 "connect.index":7,
-                 "oneOf":[
-                    {
-                       "type":"null"
-                    },
-                    {
-                       "type":"string"
-                    }
-                 ]
-          },
-          "version":{
-             "connect.index":8,
-             "oneOf":[
-                {
-                   "type":"null"
-                },
-                {
-                   "type":"string"
-                }
-             ],
-             "default":"N/A"
-          }
+                 ],
+                 "default":"N/A"
+              }
            },
            "required":[
               "name",
@@ -88,17 +63,16 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "registrationType", defaultImpl = Registration.class)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ResourceRegistration.class, name = Registration.RESOURCE),
         @JsonSubTypes.Type(value = Registration.class, name = Registration.TOOL)})
 @Builder
-public class Registration {
+public class Registration extends AbstractSchema {
     public final static String TOOL = "tool";
     public final static String RESOURCE = "resource";
-    public final static String CORRELATION_ID_FIELD_NAME = "correlationId";
+    public final static String AGENT = "agent";
 
     @JsonProperty(value = "registrationType", required = true, defaultValue = TOOL)
     private String registrationType;
@@ -113,12 +87,45 @@ public class Registration {
     @JsonProperty(value = "version", defaultValue = "N/A")
     private String version;
 
-    public Registration(String name, String description, String requestTopicName, String responseTopicName) {
-        this(TOOL, name, description, requestTopicName, responseTopicName, "N/A");
+    public Registration(String name,
+                        String description,
+                        String requestTopicName,
+                        String responseTopicName) {
+        this(TOOL, name, description, requestTopicName, responseTopicName, "N/A", new HashMap<>());
+    }
+
+    public Registration(String registrationType, String name, String description, String requestTopicName, String responseTopicName, String version) {
+        super(new HashMap<>());
+
+        this.registrationType = registrationType;
+        this.name = name;
+        this.description = description;
+        this.requestTopicName = requestTopicName;
+        this.responseTopicName = responseTopicName;
+        this.version = version;
+    }
+
+    protected Registration(String registrationType,
+                           String name,
+                           String description,
+                           String requestTopicName,
+                           String responseTopicName,
+                           String version,
+                           Map<String, Object> metaData) {
+        super(metaData);
+
+        this.registrationType = registrationType;
+        this.name = name;
+        this.description = description;
+        this.requestTopicName = requestTopicName;
+        this.responseTopicName = responseTopicName;
+        this.version = version;
     }
 
     @JsonIgnore
     public boolean isResource() {
         return StringUtils.equals(registrationType, RESOURCE);
     }
+
+
 }

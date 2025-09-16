@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
 import io.confluent.pas.agent.common.services.schemas.Registration;
-import static io.confluent.pas.agent.common.services.schemas.Registration.CORRELATION_ID_FIELD_NAME;
 
 /**
  * Auto-configuration class for MCP (Model Control Protocol) agent registration.

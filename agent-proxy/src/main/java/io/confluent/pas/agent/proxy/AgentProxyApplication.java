@@ -8,10 +8,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @SpringBootApplication
 @EnableConfigurationProperties
-public class ConfluentMcpProxyApplication {
+public class AgentProxyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConfluentMcpProxyApplication.class, args);
+        SpringApplication.run(AgentProxyApplication.class, args);
     }
 
 }
