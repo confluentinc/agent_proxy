@@ -41,7 +41,7 @@
         <reactor.version>2024.0.4</reactor.version>
         <lombok.version>1.18.38</lombok.version>
         <reactor.version>2024.0.5</reactor.version>
-        <junit.jupiter.version>5.12.2</junit.jupiter.version>
+        <junit.jupiter.version>6.0.0</junit.jupiter.version>
         <mockito.version>5.17.0</mockito.version>
         <aspectj.version>3.27.3</aspectj.version>
         <aspectjweaver.version>1.9.24</aspectjweaver.version>
