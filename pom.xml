@@ -40,7 +40,7 @@
         <langchain4j.version>1.0.0-beta4</langchain4j.version>
         <reactor.version>2024.0.4</reactor.version>
         <lombok.version>1.18.38</lombok.version>
-        <reactor.version>2024.0.5</reactor.version>
+        <reactor.version>2025.0.0</reactor.version>
         <junit.jupiter.version>5.12.2</junit.jupiter.version>
         <mockito.version>5.17.0</mockito.version>
         <aspectj.version>3.27.3</aspectj.version>
