@@ -42,7 +42,7 @@
         <kafka.version>7.9.0-ce</kafka.version>
         <caffeine.version>3.2.0</caffeine.version>
         <reactor-test.version>3.7.5</reactor-test.version>
-        <spring-openapi.version>2.8.8</spring-openapi.version>
+        <spring-openapi.version>3.0.0</spring-openapi.version>
         <kcache.version>5.2.1</kcache.version>
         <mcp.version>0.10.0</mcp.version>
         <apache.common.lang3.version>3.18.0</apache.common.lang3.version>
