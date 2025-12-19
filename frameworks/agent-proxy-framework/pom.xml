@@ -15,7 +15,7 @@
 
     <properties>
         <jsonschema-generator.version>4.38.0</jsonschema-generator.version>
-        <spring-ai.version>1.0.0-RC1</spring-ai.version>
+        <spring-ai.version>1.1.2</spring-ai.version>
         <kstream.version>7.9.1-ce</kstream.version>
     </properties>
 
@@ -24,7 +24,7 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-bom</artifactId>
-                <version>2024.0.6</version>
+                <version>2024.0.13</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.5.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -40,12 +40,12 @@
         <java.version>21</java.version>
         <confluent.version>7.9.1-22</confluent.version>
         <kafka.version>7.9.0-ce</kafka.version>
-        <caffeine.version>3.2.0</caffeine.version>
-        <reactor-test.version>3.7.6</reactor-test.version>
-        <spring-openapi.version>2.8.8</spring-openapi.version>
-        <kcache.version>5.2.1</kcache.version>
-        <mcp.version>0.10.0</mcp.version>
-        <apache.common.lang3.version>3.18.0</apache.common.lang3.version>
+        <caffeine.version>3.2.3</caffeine.version>
+        <reactor-test.version>3.8.1</reactor-test.version>
+        <spring-openapi.version>2.8.14</spring-openapi.version>
+        <kcache.version>5.2.3</kcache.version>
+        <mcp.version>0.17.0</mcp.version>
+        <apache.common.lang3.version>3.20.0</apache.common.lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.11.2</version>
+                <version>3.12.0</version>
                 <executions>
                     <execution>
                         <goals>
