@@ -1,6 +1,6 @@
 name: agent_proxy
 lang: unknown
-lang_version: unknown
+lang_version: "unknown"
 git:
   enable: true
 codeowners:
