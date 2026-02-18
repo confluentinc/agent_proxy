@@ -18,7 +18,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jsonschema-generator.version>4.38.0</jsonschema-generator.version>
-        <victools.version>4.38.0</victools.version>
+        <victools.version>5.0.0</victools.version>
     </properties>
 
     <dependencies>
