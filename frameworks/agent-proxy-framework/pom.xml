@@ -14,7 +14,7 @@
     <name>Java Agent Frameworks</name>
 
     <properties>
-        <jsonschema-generator.version>4.38.0</jsonschema-generator.version>
+        <jsonschema-generator.version>5.0.0</jsonschema-generator.version>
         <spring-ai.version>1.0.0-RC1</spring-ai.version>
         <kstream.version>7.9.1-ce</kstream.version>
     </properties>
