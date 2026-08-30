@@ -44,7 +44,7 @@
         <reactor-test.version>3.7.6</reactor-test.version>
         <spring-openapi.version>2.8.8</spring-openapi.version>
         <kcache.version>5.2.1</kcache.version>
-        <mcp.version>0.10.0</mcp.version>
+        <mcp.version>2.0.1</mcp.version>
         <apache.common.lang3.version>3.18.0</apache.common.lang3.version>
     </properties>
 
